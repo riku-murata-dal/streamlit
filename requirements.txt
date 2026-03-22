@@ -19,5 +19,4 @@ streamlit
 torch
 transformers[ja]
 wordcloud
-io
 japanize-matplotlib
