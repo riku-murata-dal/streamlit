@@ -14,6 +14,7 @@ import plotly.graph_objects as go
 from other.component import make_upload_box # 各種ファイルアップロード用関数
 from other.component import get_uploaded_file_obj 
 
+
 from make_df.heatmap_VR import make_df_heatmap_VR # ヒートマップVRローデータの整形用の関数
 from make_df.heatmap_TVAL import make_df_heatmap_TVAL # ヒートマップTVALローデータの整形用の関数
 from make_df.heatmap_REVISIO import make_df_heatmap_REVISIO # ヒートマップREVISIOローデータの整形用の関数
@@ -1615,41 +1616,88 @@ elif user_select == "🔍視聴率×検索数":
     # =========================================================
     with tab_upload:
         with st.container(border=True):
-            st.markdown("### ファイルをアップロード")
+            st.error(
+                """
+                ⚠️DS INSIGHTの検索データはツールの仕様上、「男女10歳区分」でのDLが必要となります（1度にDLできるKW数の上限は10個）  
+                ⚠️DLファイルの1行目に「KW_男性/女性●代」と記載されて抽出されるので、複数回DLした場合はデータ名は変えずに列追加で1シートに集約してアップロードしてください
+                """,
+                icon=None
+            )
+
 
             middle_cols = st.columns(4)
-
+            
             with middle_cols[0]:
                 make_upload_box(
-                    "VR日別視聴率データ",
-                    "VR日別視聴率データのExcelファイルを選択してください",
-                    "vr_daily_file",
-                    ["xlsx", "xlsm"],
+                    title = "VR日別視聴率",
+                    info_message = "iNEX3>テレビCM統計＞時点リスト",
+                    warning_message = None,
+                    error_message = None,
+                    key = "vr_daily_file",
+                    allowed_types = ["xlsx", "xlsm"]
                 )
-
+                
             with middle_cols[1]:
                 make_upload_box(
-                    "TVAL日別視聴率データ",
-                    "TVAL日別視聴率データのExcelファイルを選択してください",
-                    "tval_daily_file",
-                    ["xlsx", "xlsm"],
+                    title = "TVAL日別視聴率",
+                    info_message = "TVAL>TVデータサーチ>CMリスト",
+                    warning_message = None,
+                    error_message = None,
+                    key = "tval_daily_file",
+                    allowed_types = ["xlsx", "xlsm"]
                 )
-
+                
             with middle_cols[2]:
                 make_upload_box(
-                    "REVISIO日別視聴率データ",
-                    "REVISIO日別視聴率データのファイルを選択してください",
-                    "revisio_daily_file",
-                    ["csv", "xlsx", "xlsm"],
+                    title = "REVISIO日別視聴率",
+                    info_message = "REVISIOデータ抽出ツール＞地上波時点（CM）",
+                    warning_message = None,
+                    error_message = None,
+                    key = "revisio_daily_file",
+                    allowed_types = ["xlsx", "xlsm"]
                 )
-
+                
             with middle_cols[3]:
                 make_upload_box(
-                    "DS.Insight検索数データ",
-                    "DS.Insight検索数データのファイルを選択してください",
-                    "search_daily_file",
-                    ["csv", "xlsx", "xlsm"],
+                    title = "Insight検索数",
+                    info_message = "??",
+                    warning_message = None,
+                    error_message = None,
+                    key = "search_daily_file",
+                    allowed_types = ["xlsx", "xlsm"]
                 )
+
+            # with middle_cols[0]:
+            #     make_upload_box(
+            #         "VR日別視聴率データ",
+            #         "VR日別視聴率データのExcelファイルを選択してください",
+            #         "vr_daily_file",
+            #         ["xlsx", "xlsm"],
+            #     )
+
+            # with middle_cols[1]:
+            #     make_upload_box(
+            #         "TVAL日別視聴率データ",
+            #         "TVAL日別視聴率データのExcelファイルを選択してください",
+            #         "tval_daily_file",
+            #         ["xlsx", "xlsm"],
+            #     )
+
+            # with middle_cols[2]:
+            #     make_upload_box(
+            #         "REVISIO日別視聴率データ",
+            #         "REVISIO日別視聴率データのファイルを選択してください",
+            #         "revisio_daily_file",
+            #         ["csv", "xlsx", "xlsm"],
+            #     )
+
+            # with middle_cols[3]:
+            #     make_upload_box(
+            #         "DS.Insight検索数データ",
+            #         "DS.Insight検索数データのファイルを選択してください",
+            #         "search_daily_file",
+            #         ["csv", "xlsx", "xlsm"],
+            #     )
 
     # =========================================================
     # 📈推移・相関・散布図
